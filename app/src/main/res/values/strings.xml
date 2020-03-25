@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Slot Machine</string>
+    <string name="help_text">
+        Play with a slot machine! Try to match all of the slots together!
+        Use the bar below the scoreboard to speed up the slot speed!
+        3 Cherries = 50 Points;
+        3 Grapes = 25 Points;
+        3 Pears = 20 Points;
+        3 Strawberries = 10 Points;
+        No 3 Matches = 0 Points;
+    </string>
+</resources>
