@@ -11,6 +11,12 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
     }
+
+    public void onPause(){ super.onPause(); }
+
+    public void onResume() { super.onResume(); }
+
+
     public void onBackPressed(){
         finish();
     }

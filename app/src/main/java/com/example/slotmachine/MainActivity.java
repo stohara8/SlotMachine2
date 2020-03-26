@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     public int slotint3;
     public Random rand;
     public int time;
-    public int scoreValue;
+    public double scoreValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         rand = new Random();
         time = 100 + rand.nextInt(900);
+        scoreValue = 0;
 
         speedBar = findViewById(R.id.speedBar);
         speedBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -116,20 +117,37 @@ public class MainActivity extends AppCompatActivity {
         grid.addView(slot3);
 
         if (savedInstanceState == null) {
-            slotint1 = 1;
-            slotint2 = 2;
-            slotint3 = 3;
-            scoreValue = 0;
+            slotint1 = 0;
+            slotint2 = 1;
+            slotint3 = 2;
             on = false;
         }
         else{
             slotint1 = savedInstanceState.getInt("SLOT1");
-            slot1.setImageDrawable(slotPics[slotint1]);
             slotint2 = savedInstanceState.getInt("SLOT2");
-            slot2.setImageDrawable(slotPics[slotint2]);
             slotint3 = savedInstanceState.getInt("SLOT3");
-            slot3.setImageDrawable(slotPics[slotint3]);
-            scoreValue = savedInstanceState.getInt("POINTS");
+
+            if((slotint1-1) == -1){
+                slot1.setImageDrawable(slotPics[3]);
+            }
+            else{
+                slot1.setImageDrawable(slotPics[slotint1-1]);
+            }
+
+            if((slotint2-1) == -1){
+                slot2.setImageDrawable(slotPics[3]);
+            }
+            else{
+                slot2.setImageDrawable(slotPics[slotint2-1]);
+            }
+
+            if((slotint3-1) == -1){
+                slot3.setImageDrawable(slotPics[3]);
+            }
+            else{
+                slot3.setImageDrawable(slotPics[slotint3-1]);
+            }
+
             on = savedInstanceState.getBoolean("ON");
             if (on) {
                 start.setText("STOP");
@@ -160,13 +178,11 @@ public class MainActivity extends AppCompatActivity {
         bundle.putInt("SLOT1", slotint1);
         bundle.putInt("SLOT2", slotint2);
         bundle.putInt("SLOT3", slotint3);
-        bundle.putInt("POINTS", scoreValue);
         bundle.putBoolean("ON", on);
     }
 
     public void startPressed(View v){
         if(on) {
-            start.setText("ROLL AGAIN");
             on = false;
             handler.removeCallbacks(update1);
             handler.removeCallbacks(update2);
@@ -206,27 +222,27 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             scoreValue += 0;
-            //pointBox.setText(String.format("%.0f", scoreValue));
+            pointBox.setText(String.format("%.0f", scoreValue));
         }
     }
 
     private class UpdateSlot1 implements Runnable{
 
         public void run(){
-            if(slotint1 == 1){
-                slot1.setImageDrawable(cherryImage);
+            if(slotint1 == 0){
+                slot1.setImageDrawable(slotPics[slotint1]);
+            }
+            else if(slotint1 == 1){
+                slot1.setImageDrawable(slotPics[slotint1]);
             }
             else if(slotint1 == 2){
-                slot1.setImageDrawable(grapeImage);
-            }
-            else if(slotint1 == 3){
-                slot1.setImageDrawable(pearImage);
+                slot1.setImageDrawable(slotPics[slotint1]);
             }
             else{
-                slot1.setImageDrawable(strawberryImage);
+                slot1.setImageDrawable(slotPics[slotint1]);
             }
-            if(slotint1 < 4){ slotint1++; }
-            else{ slotint1 = 1; }
+            if(slotint1 < 3){ slotint1++; }
+            else{ slotint1 = 0; }
             handler.postDelayed(update1, time);
         }
 
@@ -235,20 +251,20 @@ public class MainActivity extends AppCompatActivity {
     private class UpdateSlot2 implements Runnable{
 
         public void run(){
-            if(slotint2 == 1){
-                slot2.setImageDrawable(cherryImage);
+            if(slotint2 == 0){
+                slot2.setImageDrawable(slotPics[slotint2]);
+            }
+            else if(slotint1 == 1){
+                slot2.setImageDrawable(slotPics[slotint2]);
             }
             else if(slotint1 == 2){
-                slot2.setImageDrawable(grapeImage);
-            }
-            else if(slotint1 == 3){
-                slot2.setImageDrawable(pearImage);
+                slot2.setImageDrawable(slotPics[slotint2]);
             }
             else{
-                slot2.setImageDrawable(strawberryImage);
+                slot2.setImageDrawable(slotPics[slotint2]);
             }
-            if(slotint2 < 4){ slotint2++; }
-            else{ slotint2 = 1; }
+            if(slotint2 < 3){ slotint2++; }
+            else{ slotint2 = 0; }
             handler.postDelayed(update2, time/2);
         }
 
@@ -257,20 +273,20 @@ public class MainActivity extends AppCompatActivity {
     private class UpdateSlot3 implements Runnable{
 
         public void run(){
-            if(slotint3 == 1){
-                slot3.setImageDrawable(cherryImage);
+            if(slotint3 == 0){
+                slot3.setImageDrawable(slotPics[slotint3]);
+            }
+            else if(slotint3 == 1){
+                slot3.setImageDrawable(slotPics[slotint3]);
             }
             else if(slotint3 == 2){
-                slot3.setImageDrawable(grapeImage);
-            }
-            else if(slotint3 == 3){
-                slot3.setImageDrawable(pearImage);
+                slot3.setImageDrawable(slotPics[slotint3]);
             }
             else{
-                slot3.setImageDrawable(strawberryImage);
+                slot3.setImageDrawable(slotPics[slotint3]);
             }
-            if(slotint3 < 4){ slotint3++; }
-            else{ slotint3 = 1; }
+            if(slotint3 < 3){ slotint3++; }
+            else{ slotint3 = 0; }
             handler.postDelayed(update3, time/3);
         }
 
